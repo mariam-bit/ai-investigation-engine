@@ -34,7 +34,7 @@ if not GEMINI_API_KEY:
     st.stop()
 
 PRIMARY_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
-FALLBACK_MODELS = ["gemini-2.0-flash", "gemini-1.5-flash"]
+FALLBACK_MODELS = ["gemini-2.0-flash"]
 
 @st.cache_resource
 def load_embeddings():
