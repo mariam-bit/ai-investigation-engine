@@ -8,3 +8,4 @@ pydantic
 requests
 langchain-text-splitters
 langchain
+langchain-chroma
