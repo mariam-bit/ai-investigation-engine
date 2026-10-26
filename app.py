@@ -152,12 +152,11 @@ if st.button("Run Investigation"):
 
                     prompt = f"""
                     You are an advanced AI Investigation Engine and general assistant. 
-                    If relevant document context or tool outputs are provided below, use them to answer the question and cite your sources. 
-                    If no documents are uploaded or the context is empty, answer the question using your general knowledge naturally and helpfully.
+                    - If documents are uploaded and relevant context is provided, use it to answer and cite your sources.
+                    - If no documents are uploaded or the context is empty, answer the user's question using your general knowledge naturally and helpfully.
 
-                    {tool_feedback}
                     Context/Evidence:
-                    {context if context else "No specific documents found in the database. Rely on general assistant capabilities."}
+                    {context if context else "No documents uploaded. Use your general knowledge."}
 
                     Question: {question}
                     """
