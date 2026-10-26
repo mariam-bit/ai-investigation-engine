@@ -167,10 +167,10 @@ if st.button("Run Investigation"):
                     st.subheader("Investigation Findings")
                     st.write(response.text)
                     
-                    st.subheader("Source Citations & Evidence")
                     if combined_sources:
-                        for i, source in enumerate(combined_sources, 1):
-                            st.info(f"**Source {i}:** {source}")
+                        with st.expander("See The Used Sources"):
+                            for i, source in enumerate(combined_sources, 1):
+                                st.info(f"**Source {i}:** {source}")
                     else:
                         st.info("No external document chunks matched, used baseline reasoning.")
 
