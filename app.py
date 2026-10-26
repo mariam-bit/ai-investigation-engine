@@ -33,8 +33,8 @@ if not GEMINI_API_KEY:
     st.error("⚠️ GEMINI_API_KEY is not set. Please add it to Streamlit Secrets.")
     st.stop()
 
-PRIMARY_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
-FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-1.5-flash"]
+PRIMARY_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+FALLBACK_MODELS = ["gemini-2.0-flash", "gemini-1.5-flash"]
 
 @st.cache_resource
 def load_embeddings():
