@@ -6,3 +6,5 @@ google-genai
 sentence-transformers
 pydantic
 requests
+langchain-text-splitters
+langchain
