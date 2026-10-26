@@ -151,13 +151,13 @@ if st.button("Run Investigation"):
                         tool_feedback = f"\n[System Tool Executed]: {get_system_status()}\n"
 
                     prompt = f"""
-                    You are an advanced AI Investigation Engine. Answer the user's question using ONLY the provided context and tool outputs below.
-                    If the context is insufficient or contradictory, state that clearly and do not make up facts.
-                    Always cite your sources/evidence directly from the context.
+                    You are an advanced AI Investigation Engine and general assistant. 
+                    If relevant document context or tool outputs are provided below, use them to answer the question and cite your sources. 
+                    If no documents are uploaded or the context is empty, answer the question using your general knowledge naturally and helpfully.
 
                     {tool_feedback}
-                    Context:
-                    {context}
+                    Context/Evidence:
+                    {context if context else "No specific documents found in the database. Rely on general assistant capabilities."}
 
                     Question: {question}
                     """
