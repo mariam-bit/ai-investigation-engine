@@ -10,6 +10,7 @@ langchain-text-splitters
 langchain
 langchain-chroma
 langchain-huggingface
+langchain-community
 torch
 transformers
 numpy
