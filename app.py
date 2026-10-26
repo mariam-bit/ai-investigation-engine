@@ -34,7 +34,7 @@ if not GEMINI_API_KEY:
     st.stop()
 
 PRIMARY_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
-FALLBACK_MODELS = ["gemini-3.8-flash"]
+FALLBACK_MODELS = ["gemini-3.5-flash-lite", "gemini-2.5-flash", "gemini-1.5-flash"]
 
 @st.cache_resource
 def load_embeddings():
@@ -49,22 +49,21 @@ client = genai.Client(
     ),
 )
 
-def generate_with_retry(prompt: str, retries_per_model: int = 1):
+def generate_with_retry(prompt: str, retries_per_model: int = 2):
     last_error = None
     for model in [PRIMARY_MODEL, *FALLBACK_MODELS]:
         for attempt in range(retries_per_model + 1):
             try:
                 response = client.models.generate_content(model=model, contents=prompt)
+                print(f"[gemini] successfully answered by {model}")
                 return response
-            except errors.ServerError as e:
+            except Exception as e:
                 last_error = e
+                print(f"[gemini] {model} attempt {attempt + 1} failed: {e}")
                 if attempt < retries_per_model:
-                    time.sleep(2)
-            except errors.ClientError as e:
-                if e.code in (404, 429):
-                    last_error = e
-                    break
-                raise
+                    time.sleep(2) # Wait a bit before retrying the same model
+                else:
+                    break # Move to the next fallback model
     raise last_error
 
 def get_system_status() -> str:
