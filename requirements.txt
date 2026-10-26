@@ -9,3 +9,7 @@ requests
 langchain-text-splitters
 langchain
 langchain-chroma
+langchain-huggingface
+torch
+transformers
+numpy
