@@ -73,10 +73,12 @@ st.title("AI Investigation Engine")
 st.markdown("Advanced RAG-based document analysis, hybrid search, and multi-source reasoning.")
 
 st.sidebar.header("Document Management")
-uploaded_file = st.sidebar.file_uploader("Upload Document (PDF, TXT, CSV)", type=["pdf", "txt", "csv"], accept_multiple_files=True )
-
-# Make sure your file uploader has accept_multiple_files=True:
-# uploaded_files = st.sidebar.file_uploader("Upload Document (PDF, TXT, CSV)", type=["pdf", "txt", "csv"], accept_multiple_files=True)
+# Make sure the variable is plural (uploaded_files)
+uploaded_files = st.sidebar.file_uploader(
+    "Upload Document (PDF, TXT, CSV)", 
+    type=["pdf", "txt", "csv"], 
+    accept_multiple_files=True
+)
 
 if uploaded_files:
     if st.sidebar.button("Ingest File"):
