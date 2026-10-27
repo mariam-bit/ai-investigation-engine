@@ -34,7 +34,7 @@ if not GEMINI_API_KEY:
     st.stop()
 
 PRIMARY_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
-FALLBACK_MODELS = ["gemini-3.5-flash-lite", "gemini-2.5-flash", "gemini-1.5-flash"]
+FALLBACK_MODELS = ["gemini-3.6-flash", "gemini-2.5-flash"]
 
 @st.cache_resource
 def load_embeddings():
@@ -172,14 +172,14 @@ if st.button("Run Investigation"):
                     st.subheader("Investigation Findings")
                     st.write(response.text)
                     
-                    if combined_sources:
-                        with st.expander("See The Used Sources"):
-                            for i, source in enumerate(combined_sources, 1):
-                                st.info(f"**Source {i}:** {source}")
-                    else:
-                        st.info("No external document chunks matched, used baseline reasoning.")
+                    #if combined_sources:
+                       # with st.expander("See The Used Sources", expanded=False):
+                            #for i, source in enumerate(combined_sources, 1):
+                                #st.info(f"**Source {i}:** {source}")
+                    #else:
+                        #st.info("No external document chunks matched, used baseline reasoning.")
 
-                except Exception as e:
-                    st.error(f"An error occurred during investigation: {e}")
-    else:
-        st.warning("Please enter a question.")
+                #except Exception as e:
+                    #st.error(f"An error occurred during investigation: {e}")
+    #else:
+        #st.warning("Please enter a question.")
