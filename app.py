@@ -73,17 +73,22 @@ st.title("AI Investigation Engine")
 st.markdown("Advanced RAG-based document analysis, hybrid search, and multi-source reasoning.")
 
 st.sidebar.header("Document Management")
-uploaded_file = st.sidebar.file_uploader("Upload Document (PDF, TXT, CSV)", type=["pdf", "txt", "csv"])
+uploaded_file = st.sidebar.file_uploader("Upload Document (PDF, TXT, CSV)", type=["pdf", "txt", "csv"], accept_multiple_files=True )
 
-if uploaded_file is not None:
+# Make sure your file uploader has accept_multiple_files=True:
+# uploaded_files = st.sidebar.file_uploader("Upload Document (PDF, TXT, CSV)", type=["pdf", "txt", "csv"], accept_multiple_files=True)
+
+if uploaded_files:
     if st.sidebar.button("Ingest File"):
-        with st.spinner("Processing and indexing document..."):
-            filename = os.path.basename(uploaded_file.name)
-            ext = os.path.splitext(filename)[1].lower()
-            
-            if ext not in SUPPORTED_EXTENSIONS:
-                st.sidebar.error("Unsupported file format.")
-            else:
+        with st.spinner("Processing and indexing documents..."):
+            for uploaded_file in uploaded_files:
+                filename = os.path.basename(uploaded_file.name)
+                ext = os.path.splitext(filename)[1].lower()
+                
+                if ext not in SUPPORTED_EXTENSIONS:
+                    st.sidebar.error(f"Unsupported file format: {filename}")
+                    continue
+                
                 file_path = os.path.join(UPLOAD_DIR, filename)
                 with open(file_path, "wb") as buffer:
                     buffer.write(uploaded_file.getvalue())
@@ -100,7 +105,7 @@ if uploaded_file is not None:
                     split_docs = text_splitter.split_documents(docs)
 
                     if not split_docs:
-                        st.sidebar.error("No text could be extracted from this file.")
+                        st.sidebar.error(f"No text could be extracted from {filename}.")
                     else:
                         ids = [f"{filename}-chunk-{i}" for i in range(len(split_docs))]
                         Chroma.from_documents(
@@ -111,8 +116,7 @@ if uploaded_file is not None:
                         )
                         st.sidebar.success(f"Successfully indexed {len(split_docs)} chunks from {filename}!")
                 except Exception as e:
-                    st.sidebar.error(f"Error processing file: {e}")
-
+                    st.sidebar.error(f"Error processing file {filename}: {e}")
 st.header("Investigation Query")
 question = st.text_input("Enter your investigation question:", placeholder="e.g., What caused payment processing failures in March?")
 
